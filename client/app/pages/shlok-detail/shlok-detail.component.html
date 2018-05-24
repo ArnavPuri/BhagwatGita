@@ -1,0 +1,87 @@
+<!-- TITLE -->
+<mat-card class="mb-40">
+    <h1>Shlok List</h1>
+</mat-card>
+
+<!-- SEARCH FORM -->
+<mat-card>
+    
+    <div class="card-title">
+        <mat-icon>search</mat-icon>
+        Search
+    </div>
+        
+    <form name="form-search" class="container-fluid">
+
+        <div class="row">
+			
+                <div class="col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input matInput type="text" placeholder="Count" [(ngModel)]="search.count" name="count" id="count">
+                    </mat-form-field>
+                </div>
+			
+                <div class="col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input matInput type="text" placeholder="English" [(ngModel)]="search.english" name="english" id="english">
+                    </mat-form-field>
+                </div>
+			
+                <div class="col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input matInput type="text" placeholder="Hindi" [(ngModel)]="search.hindi" name="hindi" id="hindi">
+                    </mat-form-field>
+                </div>
+			
+                <div class="col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input matInput type="text" placeholder="Sanskrit" [(ngModel)]="search.sanskrit" name="sanskrit" id="sanskrit">
+                    </mat-form-field>
+                </div>
+        </div>
+
+    </form>
+</mat-card>
+
+<!-- TABLE -->
+<table class="table table-hover mt-40">
+    <thead>
+        <tr>
+            <th>_id</th>
+            <th>count</th>
+            <th>english</th>
+            <th>hindi</th>
+            <th>sanskrit</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list | search: { 'count': search.count, 'english': search.english, 'hindi': search.hindi, 'sanskrit': search.sanskrit }">
+            <td><a [routerLink]="['/shloks', item._id]">{{item._id}}</a></td>
+            
+            <!-- ATTRIBUTES -->
+            
+            <td>{{item.count }}</td>
+            <td>{{item.english }}</td>
+            <td>{{item.hindi }}</td>
+            <td>{{item.sanskrit }}</td>
+            
+            <!-- DELETE BUTTON -->
+            <td>
+                <button mat-icon-button (click)="openModal(item._id)" class="mt--10">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <div class="no-result" *ngIf="(list | search: {  'count': search.count ,  'english': search.english ,  'hindi': search.hindi ,  'sanskrit': search.sanskrit  }).length == 0">
+        No items found
+    </div>
+</table>
+
+<!-- BUTTON -->
+<button class="btn btn-primary pull-right mb-20" routerLink="/shloks/new" mat-fab color="primary">
+    <mat-icon>add</mat-icon>
+</button>
+
+<div class="clearfix"></div>
